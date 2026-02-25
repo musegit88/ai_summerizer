@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { copy, deleteIcon, linkIcon, loader, submit, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
+import { useTranslation } from "react-i18next";
 const Demo = () => {
+  const { t, i18n } = useTranslation();
+
   const [article, setArticle] = useState({
     url: "",
     summary: "",
@@ -21,14 +24,15 @@ const Demo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await getSummary({ articleUrl: article.url });
-
+    const { data } = await getSummary({
+      articleUrl: article.url,
+      lang: i18n.language,
+    });
     if (data?.summary) {
       const newArticle = { ...article, summary: data.summary };
       const updatedAllArticles = [newArticle, ...allArticles];
       setArticle(newArticle);
       setAllArticles(updatedAllArticles);
-      // console.log(newArticle);
 
       localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
     }
@@ -51,7 +55,7 @@ const Demo = () => {
       {/* search */}
       <div className="flex flex-col w-full gap-2">
         <form
-          className="relative flex justify-center items-center"
+          className="relative flex justify-center items-center rtl:flex-row-reverse"
           onSubmit={handleSubmit}
         >
           <img
@@ -61,8 +65,13 @@ const Demo = () => {
           />
           <input
             type="url"
-            placeholder="Enter a URL"
-            onChange={(e) => setArticle({ ...article, url: e.target.value })}
+            placeholder={t("placeholder")}
+            onChange={(e) =>
+              setArticle({
+                ...article,
+                url: e.target.value,
+              })
+            }
             required
             className="url_input peer"
           />
@@ -70,7 +79,12 @@ const Demo = () => {
             type="submit"
             className="submit_btn peer-focus:border-gray-700 peer-focus:text-gray-700"
           >
-            <img src={submit} alt="submit" className="w-5 h-5 object-contain" />
+            <img
+              src={submit}
+              alt="submit"
+              title={t("button")}
+              className="w-5 h-5 object-contain"
+            />
           </button>
         </form>
         {/* Browse URL History */}
