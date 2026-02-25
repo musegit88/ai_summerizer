@@ -10,6 +10,7 @@ const useDirection = () => {
         const rdir = rtlLanguages.includes(i18n.language) ? "rtl" : "ltr"
         document.documentElement.dir = rdir
         document.documentElement.lang = i18n.language;
+        // fix for the API to work with en-US
         if (document.documentElement.lang === "en-US") {
             document.documentElement.lang = "en"
         }

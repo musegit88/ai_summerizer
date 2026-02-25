@@ -20,6 +20,7 @@ export const articleApi = createApi({
   endpoints: (builder) => ({
     getSummary: builder.query({
       query: (params) =>
+        // fix for the API to work with en-US      
         `/summarize?url=${encodeURIComponent(params.articleUrl)}&length=4&lang=${params.lang === "en-US" ? "en" : params.lang}`,
     }),
   }),
