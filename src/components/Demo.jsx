@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { copy, linkIcon, loader, tick } from "../assets";
+import { copy, deleteIcon, linkIcon, loader, submit, tick } from "../assets";
 import { useLazyGetSummaryQuery } from "../services/article";
 const Demo = () => {
   const [article, setArticle] = useState({
@@ -12,7 +12,7 @@ const Demo = () => {
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
   useEffect(() => {
     const articlesFromLocalStorage = JSON.parse(
-      localStorage.getItem("articles")
+      localStorage.getItem("articles"),
     );
     if (articlesFromLocalStorage) {
       setAllArticles(articlesFromLocalStorage);
@@ -38,8 +38,16 @@ const Demo = () => {
     navigator.clipboard.writeText(copyUrl);
     setTimeout(() => setCopied(false), 2800);
   };
+
+  const handleDelete = (index) => {
+    const updatedAllArticles = allArticles.filter((_, i) => i !== index);
+    setAllArticles(updatedAllArticles);
+    localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
+    window.location.reload();
+  };
+
   return (
-    <section className="mt-16">
+    <section className="mt-16 max-w-xl w-full">
       {/* search */}
       <div className="flex flex-col w-full gap-2">
         <form
@@ -54,7 +62,6 @@ const Demo = () => {
           <input
             type="url"
             placeholder="Enter a URL"
-            value={article.url}
             onChange={(e) => setArticle({ ...article, url: e.target.value })}
             required
             className="url_input peer"
@@ -63,8 +70,7 @@ const Demo = () => {
             type="submit"
             className="submit_btn peer-focus:border-gray-700 peer-focus:text-gray-700"
           >
-            {" "}
-            submit
+            <img src={submit} alt="submit" className="w-5 h-5 object-contain" />
           </button>
         </form>
         {/* Browse URL History */}
@@ -85,6 +91,13 @@ const Demo = () => {
               <p className="flex-1 font-satoshi text-gray-700 font-medium text-sm truncate">
                 {item.url}
               </p>
+              <div className="copy_btn" onClick={() => handleDelete(index)}>
+                <img
+                  src={deleteIcon}
+                  alt="delete"
+                  className="w-[80%] h-[80%] object-fit"
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -118,9 +131,6 @@ const Demo = () => {
             </div>
           )
         )}
-        {/* {allArticles.map((item, index) => (
-          <div>{item.summary}</div>
-        ))} */}
       </div>
     </section>
   );
