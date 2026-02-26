@@ -126,7 +126,7 @@ const Demo = () => {
           />
         ) : error ? (
           <p className="font-inter font-bold text-balck">
-            a error occured <br />{" "}
+            {t("error")} <br />{" "}
             <span className="font-sathoshi font-normal text-gray-700">
               {error?.data?.error}
             </span>{" "}
@@ -135,7 +135,8 @@ const Demo = () => {
           article.summary && (
             <div className="flex flex-col gap-4">
               <h2 className="font-satoshi font-bold text-gray-600 text-xl">
-                Article <span className="blue_gradient">Summary</span>
+                {t("Article")}{" "}
+                <span className="blue_gradient">{t("Summary")}</span>
               </h2>
               <div className="summary_box">
                 <p className="font-inter font-medium text-sm text-gray-700 text-justify">
