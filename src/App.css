@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-color: #fafafa;
+  --text-primary: #000000;
+  --text-secondary: #4b5563; /* gray-600 */
+  --grid-opacity: 0.4;
+  --grad-opacity: 0.15;
+}
+html.dark {
+  --bg-color: #030712;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af; /* gray-400 */
+  --grid-opacity: 0.1;
+  --grad-opacity: 0.08;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
 /* 
   Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
 */
@@ -17,7 +39,11 @@
 }
 
 .main:before {
-  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);
+  background: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 0) 0,
+    var(--bg-color) 100%
+  );
   position: absolute;
   content: "";
   z-index: 2;
@@ -34,7 +60,7 @@
   width: 100%;
   height: 100%;
   top: 0;
-  opacity: 0.4;
+  opacity: var(--grid-opacity);
   filter: invert(1);
 }
 
@@ -57,7 +83,7 @@
   height: 100%;
   filter: blur(100px) saturate(150%);
   top: 80px;
-  opacity: 0.15;
+  opacity: var(--grad-opacity);
 }
 
 @keyframes fadeInScale {
@@ -88,7 +114,8 @@
 }
 
 .head_text {
-  @apply mt-5 text-3xl sm:text-5xl font-extrabold leading-[1.15] text-black text-center;
+  @apply mt-5 text-3xl sm:text-5xl font-extrabold leading-[1.15] text-center;
+  color: var(--text-primary);
 }
 
 .sky_gradient {
@@ -96,23 +123,24 @@
 }
 
 .desc {
-  @apply mt-5 text-sm sm:text-xl text-gray-600 text-center mx-auto max-w-2xl;
+  @apply mt-5 text-sm sm:text-xl text-center mx-auto max-w-2xl;
+  color: var(--text-secondary);
 }
 
 .url_input {
-  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 pl-10 pr-12 text-sm shadow-lg font-satoshi font-medium focus:border-black focus:outline-none focus:ring-0;
+  @apply block w-full rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 py-2.5 pl-10 pr-12 text-sm shadow-lg dark:shadow-none font-satoshi font-medium focus:border-black dark:focus:border-white focus:outline-none focus:ring-0 text-black dark:text-white transition-all;
 }
 
 .submit_btn {
-  @apply hover:border-gray-700 hover:text-gray-700 absolute inset-y-0 right-0 my-1.5 mr-1.5 flex w-10 items-center justify-center rounded-md border border-gray-200 font-sans text-sm font-medium text-gray-400;
+  @apply hover:border-gray-700 dark:hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300 absolute inset-y-0 right-0 my-1.5 mr-1.5 flex w-10 items-center justify-center rounded-md border border-gray-200 dark:border-gray-800 font-sans text-sm font-medium text-gray-400 dark:text-gray-500 transition-all;
 }
 
 .link_card {
-  @apply p-3 flex justify-start items-center flex-row bg-white border border-gray-200 gap-3 rounded-lg cursor-pointer;
+  @apply p-3 flex justify-start items-center flex-row bg-white/60 dark:bg-gray-900/40 border border-gray-200 dark:border-gray-800 gap-3 rounded-lg cursor-pointer backdrop-blur-sm transition-all;
 }
 
 .copy_btn {
-  @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur flex justify-center items-center cursor-pointer;
+  @apply w-7 h-7 rounded-full bg-white/10 dark:bg-gray-800/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] dark:shadow-none backdrop-blur flex justify-center items-center cursor-pointer transition-all hover:bg-white/20 dark:hover:bg-gray-700/30;
 }
 
 .blue_gradient {
@@ -120,5 +148,9 @@
 }
 
 .summary_box {
-  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-4;
+  @apply rounded-xl border border-gray-200 dark:border-gray-800 bg-white/20 dark:bg-gray-900/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] dark:shadow-none backdrop-blur-md p-4 transition-all;
+}
+
+.summary_box p {
+  color: var(--text-secondary);
 }
