@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { github } from "../assets";
+import LanguageSelector from "./LanguageSelector";
+
 const Hero = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <header className="w-full flex justify-center items-certer flex-col">
       <nav className="flex justify-between items-center w-full pt-4 mb-10">
@@ -22,16 +24,7 @@ const Hero = () => {
           </button>
 
           {/* language selector */}
-          <select
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-            value={i18n.language}
-            className="px-4 py-2 rounded-md bg-gray-400/20"
-          >
-            <option value="en">🇺🇲 English</option>
-            <option value="am">🇪🇹 አማርኛ</option>
-            <option value="ar">🇦🇪 العربية</option>
-            <option value="fr">🇫🇷 Français</option>
-          </select>
+          <LanguageSelector />
         </div>
       </nav>
       <div className="head_text">
