@@ -4,7 +4,6 @@ export default async (req: Request, context: Context) => {
   console.log(req.url);
   const url = req.url.split("=")[1].split("&")[0];
   const lang = req.url.split("=")[2];
-  console.log(lang);
 
   try {
     const response = await fetch(
@@ -19,10 +18,10 @@ export default async (req: Request, context: Context) => {
       },
     );
     const data = await response.json();
-    console.log(data);
     return new Response(JSON.stringify(data));
   } catch (error) {
     console.log("API Error:", error);
+    return new Response(JSON.stringify(error));
   }
 };
 
@@ -30,7 +29,7 @@ export const config: Config = {
   path: "/api/v1/summarize",
   rateLimit: {
     windowLimit: 1,
-    windowSize: 60,
+    windowSize: 24 * 60 * 60 * 1000,
     aggregateBy: ["ip", "domain"],
   },
 };
