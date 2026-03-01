@@ -1,27 +1,28 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
-const rapidApiKey = import.meta.env.VITE_RAPID_API_ARTICLE_KEY;
 
 export const articleApi = createApi({
   reducerPath: "articleApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://article-extractor-and-summarizer.p.rapidapi.com/",
-    prepareHeaders: (headers) => {
-      headers.set("X-RapidAPI-Key", rapidApiKey);
-      headers.set(
-        "X-RapidAPI-Host",
-        "article-extractor-and-summarizer.p.rapidapi.com"
-      );
+    // baseUrl: "https://article-extractor-and-summarizer.p.rapidapi.com/",
+    // prepareHeaders: (headers) => {
+    //   headers.set("X-RapidAPI-Key", rapidApiKey);
+    //   headers.set(
+    //     "X-RapidAPI-Host",
+    //     "article-extractor-and-summarizer.p.rapidapi.com"
+    //   );
 
-      return headers;
-    },
+    //   return headers;
+    // },
   }),
   endpoints: (builder) => ({
     getSummary: builder.query({
       query: (params) =>
         // fix for the API to work with en-US      
-        `/summarize?url=${encodeURIComponent(params.articleUrl)}&length=4&lang=${params.lang === "en-US" ? "en" : params.lang}`,
+        // `/.netlify/functions/index?url=${params.articleUrl}&lang=${params.lang}`,
+        `/api/v1/summarize?url=${params.articleUrl}&lang=${params.lang}`,
+
     }),
   }),
 });

@@ -27,3 +27,6 @@ dist-ssr
 
 #Deployment folder
 /dist
+
+# Local Netlify folder
+.netlify
