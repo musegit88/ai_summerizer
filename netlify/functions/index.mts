@@ -29,7 +29,7 @@ export const config: Config = {
   path: "/api/v1/summarize",
   rateLimit: {
     windowLimit: 1,
-    windowSize: 86400,
+    windowSize: 180,
     aggregateBy: ["ip", "domain"],
   },
 };
