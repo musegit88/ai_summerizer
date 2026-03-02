@@ -49,11 +49,6 @@ const Demo = () => {
     localStorage.setItem("articles", JSON.stringify(updatedAllArticles));
     window.location.reload();
   };
-  const handleFetch = async () => {
-    const response = await fetch("/.netlify/functions/index");
-    const data = await response.json();
-    console.log(data);
-  };
   return (
     <section className="mt-16 max-w-xl w-full">
       {/* search */}
@@ -109,7 +104,6 @@ const Demo = () => {
             </svg>
           </button>
         </form>
-        <button onClick={() => handleFetch()}>Fetch</button>
         {/* Browse URL History */}
         <div className="flex flex-col gap-1 max-h-60 overflow-y-auto">
           {allArticles.map((item, index) => (
